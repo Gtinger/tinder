@@ -1,33 +1,117 @@
-const { response } = require('express');
-const express = require('express');
-const app = express();
+//vi bruger npm run DevStart til at starte appen, dette kører med nodemon
 
-const exphbs = require('express-handlebars');
+//vi har installeret bcrypt til at hashe pw og bruger information
 
-const bodyParser = require('body-parser');
 
-app.use(bodyParser.urlencoded({extended: true}))
+// vi er in devolpment
+//loader alle vores forskellige enviroment variable og sætter dem i proccess.env 
 
-app.engine('hbs',exphbs({
-    defaultLayout: 'main',
-    extname: '.hbs'
-}));
+if (process.env.NODE_ENV !== 'production') {
+    require('dotenv').config()
+  }
+  
+  const express = require('express')
+  const app = express()
+  const bcrypt = require('bcrypt')
+  const passport = require('passport')
+  const flash = require('express-flash')
+  const session = require('express-session')
+  const methodOverride = require('method-override')
+  
+  const initializePassport = require('./passport-config')
+  initializePassport(
+    passport,
+    email => users.find(user => user.email === email),
+    id => users.find(user => user.id === id)
+  )
+  
+  const users = []; //vi laver arrays til users og profile, dette ville ikke være optimalt til en "rigtig" produktion, men til dette formål går det an
+  //HUSK!!!! al data i disse arrays slettes ved genstart af app
+  const profile = [];
 
-app.set('view engine', 'hbs')
+  app.set('view-engine', 'ejs')
+  app.use(express.urlencoded({ extended: false }))
+  app.use(flash())
+  app.use(session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,  //vi vil ikke gemme hvis intet er ændret
+    saveUninitialized: false //vi vil ikke gemme en tom værdi hvis der ikke er en værdi i denne session
+  }))
+  app.use(passport.initialize())
+  app.use(passport.session())
+  app.use(methodOverride('_method'))
+  
+  app.get('/', checkAuthenticated, (req, res) => {
+    res.render('index.ejs', { name: req.user.name })
+  })
+  
+  app.get('/storage', checkAuthenticated, (req, res) => {
+    res.render('storage.ejs', { name: req.user.name })
+  })
 
-const books = require('./models/books');
-const { request } = require('http');
+  app.get('/profilematch', checkAuthenticated, (req, res) => {
+    res.render('profilematch.ejs', { 
+        name: req.user.name,
+        surname: req.user.surname,
+        age: req.user.age,
+        interest: req.user.interest,
+        birthplace: req.user.birthplace,
+        goals: req.user.goals})
+  });
 
-app.get('/', (request, response, next) => {
-    
-    response.render('index',{person: 'Fred', books: books.books})
-});
+  app.get('/login', checkNotAuthenticated, (req, res) => {
+    res.render('login.ejs')
+  })
+ 
 
-app.post('/add', (request, response, next) => {
-    console.log(request.body);
-    books.books.push(request.body)
-    response.redirect('/');
-})
-app.listen(8080, () => {
-    console.log('Server running on http://localhost:8080')
-})
+  app.post('/login', checkNotAuthenticated, passport.authenticate('local', {//vi bruger passports authenticate middleware, så vi behøver ikke req,res
+    successRedirect: '/',   //hvis success, bliver man send til homepage
+    failureRedirect: '/login',//hvis failure bliver man sendt til login page igen
+    failureFlash: true //dette gør så vi kan bruge de messages vi har sat op i config.js
+  }))
+  
+  app.get('/register', checkNotAuthenticated, (req, res) => {
+    res.render('register.ejs')
+  })
+  
+  app.post('/register', checkNotAuthenticated, async (req, res) => {    // vi laver en try catch da vi bruger asynkron kode
+    try {
+      const hashedPassword = await bcrypt.hash(req.body.password, 10) //10 sætter sikkerhedsniveau, 10 er mellem godt, fin sikkerhed ikke for langsomt
+      users.push({
+        id: Date.now().toString(),
+        name: req.body.name,
+        email: req.body.email,
+        password: hashedPassword,
+        surname: req.body.surname,
+        age: req.body.age,
+        interest: req.body.interest,
+        birthplace: req.body.birthplace,
+        goals: req.body.goals,
+      })
+      res.redirect('/login')
+    } catch {
+      res.redirect('/register')
+    }
+  })
+  
+  app.delete('/logout', (req, res) => { //vi bruger express til logout og vi installerer method override
+    req.logOut()
+    res.redirect('/login')
+  })
+  
+  function checkAuthenticated(req, res, next) {
+    if (req.isAuthenticated()) {
+      return next()
+    }
+  
+    res.redirect('/login')
+  }
+  
+  function checkNotAuthenticated(req, res, next) {
+    if (req.isAuthenticated()) {
+      return res.redirect('/')
+    }
+    next()
+  }
+  app.listen(8080) ,() => {
+      console.log('server running')}

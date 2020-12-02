@@ -1,0 +1,62 @@
+  
+<h1>Register</h1>
+<form action="/register" method="POST">
+    <div>
+        <label for="name">First name</label>
+        <input type="text" id="name" name="name" required> <br>
+    </div>
+    <div>
+        <label for="surname">Last name</label>
+        <input type="text" placeholder="My last name is..." name="surname" id="surname" required> <br>
+    </div>
+    <div>
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" required> <br>
+    </div>
+    <div>
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" required> <br>
+    </div>
+    <div>
+        <label for="age">Age</label>
+        <input type="date" placeholder="I was born in..." name="age" id="age" required> <br>
+    </div>
+    <div>
+        <label for="birthplace">Where are you from?</label>
+        <input type="text" placeholder="I'm from..." name="birthplace" id="birthplace" required> <br>
+    </div>
+    <div>
+        <label for="interest">Interests</label>
+        <input type="text" placeholder="I like to..." name="interest" id="interest" required> <br>
+    </div>
+    <div>
+        <label for="goals">how is your ideal partner?</label>
+        <input type="text" placeholder="I am looking for..." name="goals" id="goals" required> <br>
+    </div>
+    <div>
+        <label for="favquote">What is your favorite quote?</label>
+        <input type="text" placeholder="I am looking for..." name="favquote" id="favquote" required> <br>
+    </div>
+    <div>
+        <label for="story">Here is your opportunity to tell us something about yourself</label>
+        <input type="text" placeholder="Your story" name="story" id="story" required> <br>
+    </div>
+    <div>
+        <p>What is your gender?</p>
+        <input type="radio" id="male" name="gender" value="male">
+        <label for="male">Male</label><br>
+        <input type="radio" id="female" name="gender" value="female">
+        <label for="female">Female</label><br>
+        <input type="radio" id="other" name="gender" value="other">
+        <label for="other">Other</label> <br>
+    </div>
+    <div>
+        <p>What is your orientation?</p>
+        <input type="radio" id="straight" name="gender" value="straight">
+        <label for="male">Straight</label><br>
+        <input type="radio" id="other" name="gender" value="other">
+        <label for="other">Other</label><br> <br>
+    </div>
+  <button type="submit">Register</button>
+</form>
+<a href="/login">Login</a>
