@@ -19,12 +19,13 @@ if (process.env.NODE_ENV !== 'production') {
   const methodOverride = require('method-override')
   
   const initializePassport = require('./passport-config')
+  const getAge = require('./dob')
   initializePassport(
     passport,
     email => users.find(user => user.email === email),
     id => users.find(user => user.id === id)
   )
-  
+
   const users = []; //vi laver arrays til users og profile, dette ville ikke være optimalt til en "rigtig" produktion, men til dette formål går det an
   //HUSK!!!! al data i disse arrays slettes ved genstart af app
   const profile = [];
@@ -53,10 +54,13 @@ if (process.env.NODE_ENV !== 'production') {
     res.render('profilematch.ejs', { 
         name: req.user.name,
         surname: req.user.surname,
-        age: req.user.age,
+        dob: req.user.dob,
         interest: req.user.interest,
         birthplace: req.user.birthplace,
-        goals: req.user.goals})
+        goals: req.user.goals,
+        story: req.user.story,
+        favquote: req.user.favquote,   
+      })
   });
 
   app.get('/login', checkNotAuthenticated, (req, res) => {
@@ -83,10 +87,12 @@ if (process.env.NODE_ENV !== 'production') {
         email: req.body.email,
         password: hashedPassword,
         surname: req.body.surname,
-        age: req.body.age,
+        dob: req.body.dob,
         interest: req.body.interest,
         birthplace: req.body.birthplace,
         goals: req.body.goals,
+        story: req.body.story,
+        favquote: req.body.favquote
       })
       res.redirect('/login')
     } catch {
