@@ -32,11 +32,11 @@ class person {
 }
 
 
-var vivian = new person('Vivian','Jensen','Copenhagen','rich',['skydiving','trading options', 'feeding cows'],'Stonks only go up','astronaut',`Single mother with 18 kids and a mortage the size of Mars, if you can't handle me at my worst, you don't deserve me at my best `,'straight','female',('May 25, 1995'));
+var vivian = new person('Vivian','Jensen','Copenhagen','rich',['skydiving','trading options', 'feeding cows'],'Another day, Another dollar','astronaut',`Single mother with 18 kids and a mortage the size of Mars, if you can't handle me at my worst, you don't deserve me at my best `,'straight','female',('November 11, 2001'));
 
-var lotte = new person('lotte','lottesen',true,'blue','denim',null,'F1 driver','fast',3,('December 17, 1999'));
+var getrud = new person('Getrud','Lottesden','Roskilde','considerate',['Playing World of Warcraft','Baking Cookies','Thinking about the vastness of the ever expanding universe'],'Be the change that you wish to see in the world','inbetween jobs','Born in 1985 at very young age','bi','female','April 20, 1985');
 
-
+/*
 lotte.calculateAge();
 henrik.calculateAge();
 
@@ -44,4 +44,4 @@ var newLotte = JSON.stringify(lotte);
 function myFunction() {
    document.getElementById("demo").innerHTML = newLotte;
  }
- console.log(calculateAge(henrik))
+ console.log(calculateAge(henrik))  */

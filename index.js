@@ -59,7 +59,10 @@ if (process.env.NODE_ENV !== 'production') {
         birthplace: req.user.birthplace,
         goals: req.user.goals,
         story: req.user.story,
-        favquote: req.user.favquote,   
+        favquote: req.user.favquote,
+        gender: req.user.gender,
+        orientation: req.user.orientation,
+        occupation: req.user.occupation,   
       })
   });
 
@@ -92,7 +95,10 @@ if (process.env.NODE_ENV !== 'production') {
         birthplace: req.body.birthplace,
         goals: req.body.goals,
         story: req.body.story,
-        favquote: req.body.favquote
+        favquote: req.body.favquote,
+        gender: req.body.gender,
+        orientation: req.body.orientation,
+        occupation: req.body.occupation,
       })
       res.redirect('/login')
     } catch {

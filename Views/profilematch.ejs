@@ -1,13 +1,45 @@
- <script src="dob.js"></script>
+<script src="dob.js"></script>
  
- <h1><%= name %> <%= surname %></h1>
-<div id="alder"> <h1><%=age%></h1></div>
-<p>born in <%= birthplace %></p>
-<p><%= name %> likes <%= interest %> and GENDER (his) dream GENDER girl is <%= goals %> <p>
-<div>
-    <h3> <%= name %>'s story </h3>
-    <p>
-        <%= story %>
-    </p>
+<h1>Hi <%= name %>, this is how other users will see your profile.</h1>
+<h3><%= name %> <%= surname %></h3>
+
+<div id="about">
+<p>born in <%= birthplace %> in <%=dob%></p>
+<p><%= name %> likes to <%= interest %> and
+    <!-- if else for gender pronoun-->
+ <% if(gender === 'male'){ %>
+       <p>his</p>
+   <% }if(gender === 'female'){ %>
+       <p>her</p>
+   <% } if (gender === 'other') { %> 
+       <p>their</p> 
+   <% } %>
+
+   dream
+
+<% if(orientation === 'straight'){ %>
+    <% if(gender === 'male'){ %>
+        <p>woman</p>
+    <% } else{ %>
+        <p>man</p>
+    <% } %>
+    <% } else{ %>
+        <p>partner</p>
+    <% } %>
+
+   is <%= goals %> <p> 
 </div>
-<h2>hello</h2>
+<div>
+
+   <h3> <%= name %>'s story </h3>
+   <p>
+       <%= story %>
+   </p>
+</div>
+<div>
+    <p>Occupation: <%= occupation %> </p>
+</div>
+<div>
+    <p><%= name %>'s favourite quote': <%= favquote %> </p>
+</div>
+<h2>Your matches</h2>
