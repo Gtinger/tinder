@@ -1,5 +1,3 @@
-<script src="dob.js"></script>
- 
 <h1>Hi <%= name %>, this is how other users will see your profile.</h1>
 <h3><%= name %> <%= surname %></h3>
 
@@ -40,6 +38,26 @@
     <p>Occupation: <%= occupation %> </p>
 </div>
 <div>
-    <p><%= name %>'s favourite quote': <%= favquote %> </p>
+    <p><%= name %>'s favourite quote: <%= favquote %> </p>
 </div>
+
+
 <h2>Your matches</h2>
+
+<% for (var i = 0; i< people.length;  i++ ){ %>
+    <li><%= people[i].firstname %> - <%= people[i].surname %> </li>
+    <form action="/like" method="POST">
+        <button class="like" type="submit" value="like">like <%= people[i].firstname %> </button>
+    </form>
+    <form action="/like" method="POST">
+        <button class="dislike" type="submit" value="dislike">dislike <%= people[i].surname %></button>
+    </form>
+    <% } %>   
+
+
+    
+    <% for(var i=0;i<people.length;i++) { %>
+
+        <span onclick="getId('<%=people[i].firstname%>')"><%=people[i].firstname%></span>
+        
+        <% } %>

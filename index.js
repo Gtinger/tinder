@@ -28,7 +28,8 @@ if (process.env.NODE_ENV !== 'production') {
 
   const users = []; //vi laver arrays til users og profile, dette ville ikke være optimalt til en "rigtig" produktion, men til dette formål går det an
   //HUSK!!!! al data i disse arrays slettes ved genstart af app
-  const profile = [];
+  const potentialMatches = require('./hardcodedusers') //vi laver et array med potential matches 
+const people = require('./hardcodedusers')
 
   app.set('view-engine', 'ejs')
   app.use(express.urlencoded({ extended: false }))
@@ -62,14 +63,20 @@ if (process.env.NODE_ENV !== 'production') {
         favquote: req.user.favquote,
         gender: req.user.gender,
         orientation: req.user.orientation,
-        occupation: req.user.occupation,   
+        occupation: req.user.occupation, 
+        people: people,  
       })
   });
 
+  app.post('/like',(req, res, i) => {
+    console.log(req.body);
+  });
+  app.post('/dislike',(req,res,i) => {
+    console.log(req.body)
+  });
   app.get('/login', checkNotAuthenticated, (req, res) => {
     res.render('login.ejs')
   })
- 
 
   app.post('/login', checkNotAuthenticated, passport.authenticate('local', {//vi bruger passports authenticate middleware, så vi behøver ikke req,res
     successRedirect: '/',   //hvis success, bliver man send til homepage
@@ -100,6 +107,7 @@ if (process.env.NODE_ENV !== 'production') {
         orientation: req.body.orientation,
         occupation: req.body.occupation,
       })
+
       res.redirect('/login')
     } catch {
       res.redirect('/register')

@@ -10,8 +10,7 @@ class person {
         this.story = story
         this.orientation = orientation
         this.gender = gender
-        this.dateOfBirth = dateOfBirth
-    console.log(this);
+        this.dateOfBirth = dateOfBirth;
     }
     calculateAge(){ 
         var msBetweenDOBAnd1970 = new Date(this.dateOfBirth);
@@ -26,7 +25,7 @@ class person {
         //var month = day*30;
         //var year = day*365.25;
         var years = Math.round(ms/year);
-        console.log(years);
+        return years;
         }
         
 }
@@ -35,6 +34,16 @@ class person {
 var vivian = new person('Vivian','Jensen','Copenhagen','rich',['skydiving','trading options', 'feeding cows'],'Another day, Another dollar','astronaut',`Single mother with 18 kids and a mortage the size of Mars, if you can't handle me at my worst, you don't deserve me at my best `,'straight','female',('November 11, 2001'));
 
 var getrud = new person('Getrud','Lottesden','Roskilde','considerate',['Playing World of Warcraft','Baking Cookies','Thinking about the vastness of the ever expanding universe'],'Be the change that you wish to see in the world','inbetween jobs','Born in 1985 at very young age','bi','female','April 20, 1985');
+
+var frederikke = new person('Frederikke','Mettesen','Copenhagen','A practiser of social distancing',['Instagram','Talking'],'Wear a mask','Leader','DENMARK !!! ','straight','female','2015-03-25');
+var people = [];
+
+people.push(getrud);
+people.push(vivian);
+people.push(frederikke);
+
+module.exports = people;
+
 
 /*
 lotte.calculateAge();
